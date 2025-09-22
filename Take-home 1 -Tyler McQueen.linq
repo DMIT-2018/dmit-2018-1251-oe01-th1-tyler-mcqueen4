@@ -52,3 +52,17 @@ Students.Where(s => s.Countries.CountryName != "Canada" && !s.StudentPayments.An
 
 	})
 	.Dump();
+//Q4
+
+Employees.Where(e => e.Position.Description == "Instructor" && e.ReleaseDate.Value == null && e.ClassOfferings.Any())
+	.OrderByDescending(e => e.ClassOfferings.Count())
+	.ThenBy(e => e.LastName)
+	.Select(e => new
+	{
+		ProgramName = e.Program.ProgramName,
+		FullName = $"{e.FirstName} {e.LastName}",
+		WorkLoad = e.ClassOfferings.Count() > 24 ? "High"
+				 : e.ClassOfferings.Count() > 8 ? "Med"
+												  : "Low"
+	})
+	.Dump();
