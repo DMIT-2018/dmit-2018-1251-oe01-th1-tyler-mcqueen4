@@ -66,3 +66,16 @@ Employees.Where(e => e.Position.Description == "Instructor" && e.ReleaseDate.Val
 												  : "Low"
 	})
 	.Dump();
+//Q5
+Clubs.Select(c => new
+{
+	Supervisor = c.EmployeeID == null ? "Unknown"
+										: c.Employee.FirstName + " " + c.Employee.LastName,
+	Club = c.ClubName,
+	MemberCount = c.ClubMembers.Count(),
+	Activites = c.ClubActivities.Count() == 0 ? "None Schedule"
+											: c.ClubActivities.Count().ToString()
+
+})
+	.OrderByDescending(c => c.MemberCount)
+	.Dump();
